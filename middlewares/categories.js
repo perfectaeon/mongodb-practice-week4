@@ -1,4 +1,4 @@
-
+// Файл middlewares/categories.js
 
 // Импортируем модель
 const categories = require('../models/category');

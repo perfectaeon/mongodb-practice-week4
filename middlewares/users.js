@@ -1,4 +1,4 @@
-
+// Файл middlewares/users.js
 
 // Импортируем модель
 const users = require('../models/user');
