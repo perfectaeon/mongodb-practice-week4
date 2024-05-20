@@ -64,14 +64,6 @@ const deleteGame = async (req, res, next) => {
     res.status(400).send({ message: "Error deleting game" });
   }
 }; 
-const checkEmptyFields = async (req, res, next) => {
-  if (req.isVoteRequest) {
-    res.setHeader("Content-Type", "application/json");
-        res.status(400).send(JSON.stringify({ message: "Заполните все поля" }));
-  } else {
-    next();
-  }
-};
 
 
 const checkIsGameExists = async (req, res, next) => {
@@ -86,12 +78,17 @@ const checkIsGameExists = async (req, res, next) => {
   }
 };
 const checkIfCategoriesAvaliable = async (req, res, next) => {
+  if(req.isVoteRequest) {
+    next();
+    return;
+  }
   // Проверяем наличие жанра у игры
-if (req.isVoteRequest) {
+  if (!req.body.categories || req.body.categories.length === 0) {
   res.setHeader("Content-Type", "application/json");
       res.status(400).send(JSON.stringify({ message: "Выбери хотя бы одну категорию" }));
 } else {
-  next();
+  res.setHeader("Content-Type", "application/json");
+      res.status(400).send(JSON.stringify({ message: "Нельзя удалять пользователей или добавлять больше одного пользователя" }));
 }
 }; 
 const checkIfUsersAreSafe = async (req, res, next) => {
@@ -112,13 +109,30 @@ if (req.body.users.length - 1 === req.game.users.length) {
 }
 };
 
+const checkEmptyFields = async (req, res, next) => {
+  if(req.isVoteRequest) {
+    next();
+    return;
+  }
+  if (
+    !req.body.title ||
+    !req.body.description ||
+    !req.body.image ||
+    !req.body.link ||
+    !req.body.developer
+  ) {
+        res.status(400).send(JSON.stringify({ message: "Заполните все поля" }));
+  } else {
+    next();
+  }
+}
 const checkIsVoteRequest = async (req, res, next) => {
   // Если в запросе присылают только поле users
 if (Object.keys(req.body).length === 1 && req.body.users) {
   req.isVoteRequest = true;
 }
 next();
-}; 
+};  
 
 
 // Экспортируем функцию поиска всех игр

@@ -2,7 +2,8 @@
 const allowedCors = [
     'https://practicum.yandex.ru',
     'https://students-projects.ru',
-    'localhost:3001'
+    'http://localhost:3000',
+    'http://localhost:3001',
   ];
   
   // Функция, которая принимает объекты req (информация о запросе),
@@ -12,7 +13,8 @@ const allowedCors = [
       if (allowedCors.includes(origin)) { // Если это наш друг,
           res.header('Access-Control-Allow-Origin', origin); // говорим: «Добро пожаловать!»
       }
-      
+        res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
+        res.header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization");
       next(); // Идём дальше, не задерживаем очередь
   }
   
