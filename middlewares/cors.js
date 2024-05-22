@@ -1,5 +1,7 @@
 
-const allowedCors = ["aeonpindiefrontend.nomoredomainswork.ru"];
+const allowedCors = ["http://aeonpindiefrontend.nomoredomainswork.ru",
+"https://aeonpindiefrontend.nomoredomainswork.ru"
+];
 
 function cors(req, res, next) {
   const { origin } = req.headers;
