@@ -87,8 +87,7 @@ const checkIfCategoriesAvaliable = async (req, res, next) => {
   res.setHeader("Content-Type", "application/json");
       res.status(400).send(JSON.stringify({ message: "Выбери хотя бы одну категорию" }));
 } else {
-  res.setHeader("Content-Type", "application/json");
-      res.status(400).send(JSON.stringify({ message: "Нельзя удалять пользователей или добавлять больше одного пользователя" }));
+  next();
 }
 }; 
 const checkIfUsersAreSafe = async (req, res, next) => {
